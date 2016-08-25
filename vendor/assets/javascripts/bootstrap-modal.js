@@ -28,6 +28,9 @@
 		this.init(element, options);
 	};
 
+  Modal.TRANSITION_DURATION = 300
+  Modal.BACKDROP_TRANSITION_DURATION = 150
+
 	Modal.prototype = {
 
 		constructor: Modal,
@@ -203,7 +206,7 @@
 			this.$element.one($.support.transition.end, function () {
 				clearTimeout(timeout);
 				that.hideModal();
-			});
+			}).emulateTransitionEnd(Modal.TRANSITION_DURATION);
 		},
 
 		hideModal: function () {
@@ -246,7 +249,7 @@
 				this.isLoading = true;
 
 				doAnimate ?
-					this.$loading.one($.support.transition.end, callback) :
+					this.$loading.one($.support.transition.end, callback).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
 					callback();
 
 			} else if (this.isLoading && this.$loading) {
@@ -254,7 +257,7 @@
 
 				var that = this;
 				$.support.transition && this.$element.hasClass('fade')?
-					this.$loading.one($.support.transition.end, function () { that.removeLoading() }) :
+					this.$loading.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
 					that.removeLoading();
 
 			} else if (callback) {

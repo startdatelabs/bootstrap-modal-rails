@@ -99,7 +99,7 @@
 						};
 
 						transition ?
-							modal.$element.one($.support.transition.end, complete) :
+							modal.$element.one($.support.transition.end, complete).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
 							complete();
 					});
 				};
@@ -120,7 +120,7 @@
 					// trigger a relayout due to firebox's buggy transition end event 
 					if (transition) { modal.$element[0].offsetWidth; }
 					$.support.transition && modal.$element.hasClass('fade') ?
-						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); }) :
+						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
 						modal.destroy();
 				} else {
 					modal.destroy();
@@ -273,7 +273,7 @@
 				this.backdropCount += 1;
 
 				doAnimate ?
-					modal.$backdrop.one($.support.transition.end, callback) :
+					modal.$backdrop.one($.support.transition.end, callback).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
 					callback();
 
 			} else if (!modal.isShown && modal.$backdrop) {
@@ -284,7 +284,7 @@
 				var that = this;
 
 				$.support.transition && modal.$element.hasClass('fade')?
-					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) }) :
+					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) }).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
 					that.removeBackdrop(modal);
 
 			} else if (callback) {
@@ -335,7 +335,7 @@
 				this.isLoading = true;
 
 				$.support.transition ?
-					this.$backdropHandle.one($.support.transition.end, callback) :
+					this.$backdropHandle.one($.support.transition.end, callback).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
 					callback();
 
 			} else if (this.isLoading && this.$backdropHandle) {
@@ -343,7 +343,7 @@
 
 				var that = this;
 				$.support.transition ?
-					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() }) :
+					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
 					that.removeLoading();
 
 			} else if (callback) {
