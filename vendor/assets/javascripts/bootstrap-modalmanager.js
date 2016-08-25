@@ -81,12 +81,12 @@
 					that.backdrop(modal, function () {
 						modal.$element.show();
 
-						if (transition) {       
-							//modal.$element[0].style.display = 'run-in';       
+						if (transition) {
+							//modal.$element[0].style.display = 'run-in';
 							modal.$element[0].offsetWidth;
-							//modal.$element.one($.support.transition.end, function () { modal.$element[0].style.display = 'block' });  
+							//modal.$element.one($.support.transition.end, function () { modal.$element[0].style.display = 'block' });
 						}
-						
+
 						modal.layout();
 
 						modal.$element
@@ -99,7 +99,7 @@
 						};
 
 						transition ?
-							modal.$element.one($.support.transition.end, complete).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+							modal.$element.one($.support.transition.end, complete).emulateTransitionEnd(150) :
 							complete();
 					});
 				};
@@ -117,10 +117,10 @@
 				} else if (modal.$backdrop){
 					var transition = $.support.transition && modal.$element.hasClass('fade');
 
-					// trigger a relayout due to firebox's buggy transition end event 
+					// trigger a relayout due to firebox's buggy transition end event
 					if (transition) { modal.$element[0].offsetWidth; }
 					$.support.transition && modal.$element.hasClass('fade') ?
-						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); }).emulateTransitionEnd(300) :
 						modal.destroy();
 				} else {
 					modal.destroy();
@@ -273,7 +273,7 @@
 				this.backdropCount += 1;
 
 				doAnimate ?
-					modal.$backdrop.one($.support.transition.end, callback).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+					modal.$backdrop.one($.support.transition.end, callback).emulateTransitionEnd(150) :
 					callback();
 
 			} else if (!modal.isShown && modal.$backdrop) {
@@ -284,7 +284,7 @@
 				var that = this;
 
 				$.support.transition && modal.$element.hasClass('fade')?
-					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) }).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
+					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) }).emulateTransitionEnd(150) :
 					that.removeBackdrop(modal);
 
 			} else if (callback) {
@@ -335,7 +335,7 @@
 				this.isLoading = true;
 
 				$.support.transition ?
-					this.$backdropHandle.one($.support.transition.end, callback).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+					this.$backdropHandle.one($.support.transition.end, callback).emulateTransitionEnd(300) :
 					callback();
 
 			} else if (this.isLoading && this.$backdropHandle) {
@@ -343,7 +343,7 @@
 
 				var that = this;
 				$.support.transition ?
-					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(300) :
 					that.removeLoading();
 
 			} else if (callback) {
@@ -414,7 +414,7 @@
 
 	$.fn.modalmanager.Constructor = ModalManager
 
-	// ModalManager handles the modal-open class so we need 
+	// ModalManager handles the modal-open class so we need
 	// to remove conflicting bootstrap 3 event handlers
 	$(function () {
 		$(document).off('show.bs.modal').off('hidden.bs.modal');

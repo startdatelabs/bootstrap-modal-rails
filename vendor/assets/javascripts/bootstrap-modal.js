@@ -28,9 +28,6 @@
 		this.init(element, options);
 	};
 
-  Modal.TRANSITION_DURATION = 300
-  Modal.BACKDROP_TRANSITION_DURATION = 150
-
 	Modal.prototype = {
 
 		constructor: Modal,
@@ -139,7 +136,7 @@
 			}
 
 			var modalOverflow = $(window).height() - 10 < this.$element.height();
-            
+
 			if (modalOverflow || this.options.modalOverflow) {
 				this.$element
 					.css('margin-top', 0)
@@ -206,7 +203,7 @@
 			this.$element.one($.support.transition.end, function () {
 				clearTimeout(timeout);
 				that.hideModal();
-			}).emulateTransitionEnd(Modal.TRANSITION_DURATION);
+			}).emulateTransitionEnd(300);
 		},
 
 		hideModal: function () {
@@ -249,7 +246,7 @@
 				this.isLoading = true;
 
 				doAnimate ?
-					this.$loading.one($.support.transition.end, callback).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+					this.$loading.one($.support.transition.end, callback).emulateTransitionEnd(300) :
 					callback();
 
 			} else if (this.isLoading && this.$loading) {
@@ -257,7 +254,7 @@
 
 				var that = this;
 				$.support.transition && this.$element.hasClass('fade')?
-					this.$loading.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+					this.$loading.one($.support.transition.end, function () { that.removeLoading() }).emulateTransitionEnd(300) :
 					that.removeLoading();
 
 			} else if (callback) {
@@ -307,7 +304,7 @@
 				.removeData('modal')
 				.removeClass('in')
 				.attr('aria-hidden', true);
-			
+
 			if (this.$parent !== this.$element.parent()) {
 				this.$element.appendTo(this.$parent);
 			} else if (!this.$parent.length) {
